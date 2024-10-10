@@ -11,24 +11,20 @@ const Login = ({ onLoginSuccess }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Realizar la llamada a la API para obtener los usuarios
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(users => {
-        // Buscar si el email coincide con algún usuario
         const user = users.find(u => u.email === email);
         if (!user) {
           setMensaje('Error: Usuario no encontrado.');
           return;
         }
 
-        // Verificar si la contraseña (username) coincide con el usuario
         if (user.username !== password) {
           setMensaje('Error: Contraseña incorrecta.');
           return;
         }
 
-        // Si todo está correcto
         setMensaje(`Bienvenido, ${user.name}!`);
         onLoginSuccess(user);
       })
